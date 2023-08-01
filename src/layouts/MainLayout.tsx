@@ -1,16 +1,22 @@
-import ReduxProvider from "@/redux/provider"
 import React from "react"
+import type { PropsWithChildren } from "react"
+import { useSession } from "next-auth/react"
+import ReduxProvider from "@/redux/provider"
 
-interface Props {
+// components
+import NavBar from "node_modules/components/NavBar"
+
+interface LayoutProps {
   children: React.ReactNode
   withRedux?: boolean
 }
 
-const MainLayout = ({ children, withRedux }: Props): React.ReactElement => (
-  <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-    {withRedux ? (
-      <ReduxProvider>{children}</ReduxProvider>
-    ) : children}
+const MainLayout = (props: PropsWithChildren<LayoutProps>): React.ReactElement => (
+  <main className="layout">
+    {useSession()?.data && <NavBar />}
+    {props.withRedux ? (
+      <ReduxProvider>{props.children}</ReduxProvider>
+    ) : props.children}
   </main>
 )
 

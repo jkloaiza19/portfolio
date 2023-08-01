@@ -1,5 +1,7 @@
-import { exampleRouter } from "node_modules/server/api/routers/example";
 import { createTRPCRouter } from "node_modules/server/api/trpc";
+import { exampleRouter } from "node_modules/server/api/routers/example";
+import { userRouter } from 'node_modules/server/api/routers/user.router'
+import { openAIRouter } from 'node_modules/server/api/routers/openAI.router'
 
 /**
  * This is the primary router for your server.
@@ -8,6 +10,8 @@ import { createTRPCRouter } from "node_modules/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
+  user: userRouter,
+  openIA: openAIRouter,
 });
 
 // export type definition of API

@@ -55,6 +55,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    histories  ChatHistory[]
 }
 
 model VerificationToken {
@@ -63,4 +64,21 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Chat {
+    id         String   @id @default(cuid())
+    question   String
+    answer     String
+    userId     String
+    histories  ChatHistory[]
+}
+
+model ChatHistory {
+    userId     String
+    chatId     String 
+    user       User    @relation(fields: [userId], references: [id])
+    chat       Chat    @relation(fields: [chatId], references: [id])
+
+    @@id([userId, chatId])  
 }
